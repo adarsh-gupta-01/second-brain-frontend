@@ -1,0 +1,247 @@
+import { useEffect } from "react"
+
+interface EmbedProps {
+  type: 'image' | 'youtube' | 'tweet' | 'instagram' | 'doc' | 'note' | 'upload'
+  link?: string
+  content?: string
+}
+
+interface WinEmbeds {
+  twttr?: { widgets?: { load: () => void } }
+  instgrm?: { Embeds?: { process: () => void } }
+}
+
+export default function Embed({ type, link, content }: EmbedProps) {
+  // Load third-party embed scripts on demand
+  const loadScriptOnce = (id: string, src: string) => {
+    if (document.getElementById(id)) return
+    const s = document.createElement('script')
+    s.id = id
+    s.src = src
+    s.async = true
+    s.defer = true
+    document.body.appendChild(s)
+  }
+
+  useEffect(() => {
+    if (type === 'tweet') {
+      loadScriptOnce('twitter-embed', 'https://platform.twitter.com/widgets.js')
+      const win = window as unknown as WinEmbeds
+      win.twttr?.widgets?.load()
+    }
+    if (type === 'instagram') {
+      loadScriptOnce('instagram-embed', 'https://www.instagram.com/embed.js')
+      const win = window as unknown as WinEmbeds
+      win.instgrm?.Embeds?.process()
+    }
+  }, [type])
+
+  const containerClass =
+    "w-full min-h-[180px] flex justify-center items-center bg-gray-50 rounded-lg overflow-hidden"
+
+  // 🖼️ IMAGE
+  if (type === "image") {
+    return (
+      <div className={containerClass}>
+        {link ? (
+          <img
+            src={link}
+            alt="Embedded content"
+            className="max-w-full max-h-[300px] object-contain rounded-md shadow-sm"
+          />
+        ) : (
+          <div className="text-gray-400">No image available</div>
+        )}
+      </div>
+    )
+  }
+
+  // 🐦 TWEET
+  if (type === "tweet") {
+    return (
+      <div className={containerClass}>
+        {link ? (
+          <blockquote className="twitter-tweet" data-theme="light" data-width="100%">
+            <a
+              href={(link || '').replace('x.com', 'twitter.com')}
+              target="_blank"
+              rel="noopener noreferrer"
+              title="View Tweet"
+            >
+              View Tweet
+            </a>
+          </blockquote>
+        ) : (
+          <div className="text-gray-400">Tweet unavailable</div>
+        )}
+      </div>
+    )
+  }
+
+  // 📸 INSTAGRAM
+  if (type === "instagram") {
+  return (
+    <div
+      className={`${containerClass} flex flex-col items-center justify-center p-4 border border-gray-200 rounded-lg bg-white shadow-sm`}
+    >
+      {link ? (
+        <>
+          <div className="text-center mb-2 font-semibold text-gray-800">
+            Instagram Content
+          </div>
+          <a
+            href={link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block px-5 py-2 rounded font-medium hover:opacity-90 transition-opacity"
+            style={{
+              backgroundColor: "#E1306C", // Instagram pink
+              color: "#fff",
+              textDecoration: "none",
+            }}
+          >
+            View on Instagram
+          </a>
+        </>
+      ) : (
+        <div className="text-gray-400">Instagram post unavailable</div>
+      )}
+    </div>
+  );
+}
+
+
+
+
+  // ▶️ YOUTUBE
+  if (type === "youtube") {
+    // Robustly parse YouTube video id from various URL formats
+    const toId = (u?: string) => {
+      if (!u) return undefined
+      try {
+        const url = new URL(u)
+        if (url.hostname.includes('youtu.be')) {
+          return url.pathname.split('/').filter(Boolean)[0]
+        }
+        if (url.searchParams.get('v')) return url.searchParams.get('v') || undefined
+        const m = url.pathname.match(/\/embed\/([\w-]+)/) || url.pathname.match(/\/shorts\/([\w-]+)/)
+        if (m) return m[1]
+  } catch { /* ignore invalid URL formats */ }
+      // fallback regex
+      const rx = /(?:v=|youtu\.be\/|\/embed\/|\/shorts\/)([\w-]+)/
+      const mm = u.match(rx)
+      return mm?.[1]
+    }
+    const videoId = toId(link)
+    const embedLink = videoId ? `https://www.youtube.com/embed/${videoId}` : undefined
+
+    return (
+      <div className={`${containerClass} aspect-video relative`}>
+        {embedLink ? (
+          <>
+            <iframe
+              className="w-full h-full border-0"
+              title="YouTube video player"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerPolicy="strict-origin-when-cross-origin"
+              allowFullScreen
+              src={embedLink}
+            />
+            {/* Transparent overlay so user can open video in YouTube */}
+            <div
+              onClick={() => link && window.open(link, '_blank')}
+              className="absolute inset-0 z-10 cursor-pointer"
+              title="Open on YouTube"
+            />
+          </>
+        ) : (
+          <div className="text-gray-400">Invalid YouTube link</div>
+        )}
+      </div>
+    )
+  }
+
+  // 📄 DOCUMENT
+  if (type === "doc") {
+    const isPDF = !!link && /\.pdf($|\?)/i.test(link)
+    const gdocs = link ? `https://docs.google.com/gview?embedded=1&url=${encodeURIComponent(link)}` : undefined
+    return (
+      <div className={`${containerClass} p-4`}>
+        {link ? (
+          isPDF ? (
+            <iframe src={link} title="PDF" className="w-full h-[420px] border rounded" />
+          ) : (
+            <iframe src={gdocs} title="Document" className="w-full h-[420px] border rounded" />
+          )
+        ) : (
+          <div className="text-gray-400">No document link provided</div>
+        )}
+      </div>
+    )
+  }
+
+  // 🗒️ NOTE
+  if (type === "note") {
+    return (
+      <div className={`${containerClass} p-6`}>
+        <div className="w-full bg-yellow-50 border border-yellow-200 rounded-lg p-4 overflow-y-auto shadow-sm">
+          <div className="flex items-center mb-3">
+            <span className="text-yellow-600 text-2xl mr-2">📝</span>
+            <span className="text-lg font-semibold text-gray-800">Note</span>
+          </div>
+          <p className="text-gray-700 whitespace-pre-wrap text-sm leading-relaxed">
+            {content || "No note content available."}
+          </p>
+        </div>
+      </div>
+    )
+  }
+
+  // 📤 UPLOAD
+  if (type === "upload") {
+    const isImage = !!link && /\.(jpg|jpeg|png|gif|webp)($|\?)/i.test(link)
+    const isPDF = !!link && /\.pdf($|\?)/i.test(link)
+    const isVideo = !!link && /\.(mp4|webm|ogg)($|\?)/i.test(link)
+    const isAudio = !!link && /\.(mp3|wav|ogg)($|\?)/i.test(link)
+
+    return (
+      <div className={`${containerClass} p-4`}>
+        <div className="w-full flex flex-col items-center text-center">
+          {isImage && link && (
+            <img src={link} alt="Uploaded" className="w-full max-w-sm rounded shadow-sm mb-3 object-contain" />
+          )}
+          {isVideo && link && (
+            <video src={link} controls className="w-full max-w-lg rounded mb-3" />
+          )}
+          {isAudio && link && (
+            <audio src={link} controls className="w-full max-w-lg mb-3" />
+          )}
+          {isPDF && link && (
+            <iframe src={link} className="w-full h-[360px] border rounded mb-3" title="PDF Preview" />
+          )}
+          {!link && <div className="text-gray-400">No file available</div>}
+          {link && (
+            <a href={link} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-700 underline text-sm">
+              Open File
+            </a>
+          )}
+        </div>
+      </div>
+    )
+  }
+
+  // ❓ UNKNOWN TYPE
+  return (
+    <div className={`${containerClass} p-6`}>
+      <div className="text-center">
+        <div className="text-gray-400 text-6xl mb-4">❓</div>
+        <div className="text-lg font-semibold text-gray-800 mb-1">
+          Unknown Content Type
+        </div>
+        <div className="text-sm text-gray-500">
+          The content type "{type}" is not supported yet.
+        </div>
+      </div>
+    </div>
+  )
+}

@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/image.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Second-Brain</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script>
+      // Clear dark mode preferences
+      if (localStorage.getItem('darkMode')) {
+        localStorage.removeItem('darkMode');
+      }
+      // Remove dark class if it exists
+      document.documentElement.classList.remove('dark');
+    </script>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
