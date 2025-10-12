@@ -110,15 +110,24 @@ const Login = () => {
           </div>
           
           <div>
-            <Input
-              type={showPassword ? "text" : "password"}
-              placeholder="Password"
-              autoComplete="current-password"
-              onChange={(e) => setPassword(e.target.value)}
-              startIcon={<Lock />}
-              endIcon={showPassword ? <Eye onClick={() => setShowPassword(false)} /> : <HideEye onClick={() => setShowPassword(true)} />}
-              require
-            />
+            <div className="relative">
+              <Input
+                type={showPassword ? "text" : "password"}
+                placeholder="Password"
+                autoComplete="current-password"
+                onChange={(e) => setPassword(e.target.value)}
+                startIcon={<Lock />}
+                require
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors z-10"
+                tabIndex={-1}
+              >
+                {showPassword ? <Eye /> : <HideEye />}
+              </button>
+            </div>
             {password.length > 0 && password.length < 6 && (
               <p className="text-xs text-amber-600 mt-1 ml-1">⚠️ Password seems too short</p>
             )}

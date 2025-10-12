@@ -199,15 +199,24 @@ const Signup = () => {
           </div>
           
           <div>
-            <Input
-              type={showPassword ? "text" : "password"}
-              placeholder="Password"
-              autoComplete="new-password"
-              onChange={handleChange}
-              startIcon={<Lock />}
-              endIcon={showPassword ? <Eye onClick={() => setShowPassword(false)} /> : <HideEye onClick={() => setShowPassword(true)} />}
-              require
-            />
+            <div className="relative">
+              <Input
+                type={showPassword ? "text" : "password"}
+                placeholder="Password"
+                autoComplete="new-password"
+                onChange={handleChange}
+                startIcon={<Lock />}
+                require
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors z-10"
+                tabIndex={-1}
+              >
+                {showPassword ? <Eye /> : <HideEye />}
+              </button>
+            </div>
             {validationErrors.password && (
               <p className="text-xs text-rose-600 mt-1 ml-1">⚠️ {validationErrors.password}</p>
             )}

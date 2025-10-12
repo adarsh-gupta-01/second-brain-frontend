@@ -201,19 +201,28 @@ export default function Card(props: CardProps) {
 
     {/* Embedded Content */}
     <div className="flex-1 p-2 bg-gray-50">
-      <Embed
-        content={props.content}
-        type={props.type}
-        link={props.type === 'tweet' ? props.link?.replace('x.com', 'twitter.com') : props.link}
-      />
-      
-      {/* Show text content if available */}
-      {props.content && props.type === 'note' && (
-        <div className="mt-2 p-3 bg-white rounded-lg border border-gray-200">
-          <p className="text-sm text-gray-700 line-clamp-3 whitespace-pre-wrap">
+      {/* Show note content directly in card for better preview */}
+      {props.type === 'note' && props.content ? (
+        <div className="h-full bg-amber-50 border border-amber-200 rounded-lg p-4 overflow-hidden">
+          <div className="flex items-center mb-2">
+            <span className="text-amber-600 text-lg mr-2">📝</span>
+            <span className="text-sm font-semibold text-gray-800">Note</span>
+          </div>
+          <p className="text-sm text-gray-700 line-clamp-6 whitespace-pre-wrap leading-relaxed">
             {props.content}
           </p>
+          {props.content.length > 200 && (
+            <div className="mt-2 text-xs text-amber-600 font-medium">
+              Click to view full note →
+            </div>
+          )}
         </div>
+      ) : (
+        <Embed
+          content={props.content}
+          type={props.type}
+          link={props.type === 'tweet' ? props.link?.replace('x.com', 'twitter.com') : props.link}
+        />
       )}
     </div>
 
