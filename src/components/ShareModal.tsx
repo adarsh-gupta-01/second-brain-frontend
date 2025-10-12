@@ -8,7 +8,8 @@ import toast from 'react-hot-toast'
 export default function ShareModal() {
   const { isShareOpen, setIsShareOpen } = useModal()
   const { userId, username } = useContext(AuthContext)
-  const origin = window.location.origin
+  // Always use production URL for share links, not preview URLs
+  const origin = import.meta.env.VITE_PRODUCTION_URL || 'https://thought-pool.vercel.app'
   const apiKey = import.meta.env.VITE_API_KEY
 
   const [shareLink, setShareLink] = useState<string | null>(null)
