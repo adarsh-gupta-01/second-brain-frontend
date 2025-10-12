@@ -51,7 +51,7 @@ const AppRouter = () => {
         {/* Footer */}
         <footer className="fixed bottom-0 left-0 right-0 z-30 bg-white/95 backdrop-blur-md border-t border-slate-200 shadow-sm">
           <div className="text-right text-slate-500 py-2 px-4 text-sm">
-            Made by <span className="font-semibold text-purple-600">Dhruv</span> with ❤️
+            Made by <span className="font-semibold text-red-600">Adarsh</span> with ❤️
           </div>
         </footer>
       </div>
