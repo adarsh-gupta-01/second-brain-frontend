@@ -84,6 +84,33 @@ export default function ShareModal() {
     }
   }
 
+  // Native share functionality
+  const handleNativeShare = async () => {
+    if (!shareLink) return
+    
+    // Check if Web Share API is supported
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: `${username}'s Brain`,
+          text: 'Check out my Second Brain collection!',
+          url: shareLink
+        })
+        toast.success('Shared successfully!')
+      } catch (error) {
+        // User cancelled the share or error occurred
+        if ((error as Error).name !== 'AbortError') {
+          console.error('Share failed:', error)
+          toast.error('Failed to share')
+        }
+      }
+    } else {
+      // Fallback: copy to clipboard
+      toast.error('Share not supported on this browser. Link copied instead!')
+      await handleCopy()
+    }
+  }
+
   if (!isShareOpen) return null
 
   return (
@@ -127,20 +154,35 @@ export default function ShareModal() {
         )}
 
         {/* Share Link */}
-        <div className="flex gap-2 mb-5">
-          <input
-            readOnly
-            value={loadingShare ? 'Loading...' : (shareLink ?? '')}
-            placeholder={loadingShare ? 'Loading...' : (shareLink ? '' : 'No share link available')}
-            className="flex-1 px-3 py-2 border rounded-lg text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-400"
-          />
+        <div className="flex flex-col gap-2 mb-5">
+          <div className="flex gap-2">
+            <input
+              readOnly
+              value={loadingShare ? 'Loading...' : (shareLink ?? '')}
+              placeholder={loadingShare ? 'Loading...' : (shareLink ? '' : 'No share link available')}
+              className="flex-1 px-3 py-2 border rounded-lg text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-400"
+            />
+            <button
+              onClick={handleCopy}
+              disabled={copying || !shareLink}
+              className={`px-3 py-2 rounded-lg text-white transition-all duration-150
+                ${(!shareLink || copying) ? 'bg-gray-300 text-gray-600 cursor-not-allowed' : 'bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800'}`}
+            >
+              {loadingShare ? 'Loading...' : (copying ? 'Copied!' : 'Copy')}
+            </button>
+          </div>
+          
+          {/* Native Share Button */}
           <button
-            onClick={handleCopy}
-            disabled={copying || !shareLink}
-            className={`px-3 py-2 rounded-lg text-white transition-all duration-150
-              ${(!shareLink || copying) ? 'bg-gray-300 text-gray-600 cursor-not-allowed' : 'bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800'}`}
+            onClick={handleNativeShare}
+            disabled={!shareLink}
+            className={`w-full px-4 py-2.5 rounded-lg font-medium text-white transition-all duration-200 flex items-center justify-center gap-2
+              ${!shareLink ? 'bg-gray-300 cursor-not-allowed' : 'bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 active:scale-95 shadow-md hover:shadow-lg'}`}
           >
-            {loadingShare ? 'Loading...' : (copying ? 'Copied!' : 'Copy')}
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+            </svg>
+            Share via Apps
           </button>
         </div>
 
