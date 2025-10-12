@@ -16,7 +16,7 @@ interface ProfileModalProps {
 }
 
 export default function ProfileModal({ isOpen, onClose }: ProfileModalProps) {
-  const { firstName, avatar, bio, refreshUser } = useContext(AuthContext)
+  const { username, firstName, avatar, bio, refreshUser } = useContext(AuthContext)
   const apiKey = import.meta.env.VITE_API_KEY
 
   const [form, setForm] = useState<FormState>({
@@ -102,6 +102,18 @@ export default function ProfileModal({ isOpen, onClose }: ProfileModalProps) {
         <h2 className="text-2xl font-semibold mb-6 text-gray-800">Profile</h2>
 
         <div className="space-y-6">
+          {/* Username (Read-only) */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700">Username</label>
+            <input
+              value={username || ''}
+              readOnly
+              title="Username (cannot be changed)"
+              className="w-full mt-1 p-2.5 border rounded-lg bg-gray-100 text-gray-600 cursor-not-allowed"
+            />
+            <p className="text-xs text-gray-500 mt-1">Username cannot be changed</p>
+          </div>
+
           {/* Name */}
           <div>
             <label className="block text-sm font-medium text-gray-700">Name</label>
@@ -133,6 +145,7 @@ export default function ProfileModal({ isOpen, onClose }: ProfileModalProps) {
                   accept="image/*"
                   onChange={e => onFileChange(e.target.files?.[0])}
                   className="mt-1 text-sm"
+                  title="Upload avatar image"
                 />
                 <input
                   name="avatar"
