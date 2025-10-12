@@ -26,8 +26,21 @@ const Login = () => {
     e.preventDefault();
     setLoading(true);
 
-    if (!username.trim() || !password.trim()) {
-      toast.error("Please fill all fields");
+    // Validation
+    if (!username.trim() && !password.trim()) {
+      toast.error("⚠️ Please enter your username and password");
+      setLoading(false);
+      return;
+    }
+    
+    if (!username.trim()) {
+      toast.error("⚠️ Username is required");
+      setLoading(false);
+      return;
+    }
+    
+    if (!password.trim()) {
+      toast.error("⚠️ Password is required");
       setLoading(false);
       return;
     }
@@ -40,13 +53,26 @@ const Login = () => {
       );
 
       if (res.data.success) {
-        toast.success(res.data.message);
+        toast.success("✅ " + res.data.message);
         await refreshUser();
         navigate("/");
       }
     } catch (err) {
-      const message = (axios.isAxiosError(err) && err.response?.data?.message) ? err.response.data.message : "Something went wrong";
-      toast.error(message);
+      if (axios.isAxiosError(err) && err.response?.data?.message) {
+        const message = err.response.data.message;
+        // Provide specific, user-friendly error messages
+        if (message.toLowerCase().includes("user not found") || message.toLowerCase().includes("doesn't exist")) {
+          toast.error("❌ Username not found. Please check your username or sign up.");
+        } else if (message.toLowerCase().includes("password") && message.toLowerCase().includes("incorrect")) {
+          toast.error("❌ Incorrect password. Please try again.");
+        } else if (message.toLowerCase().includes("invalid credentials")) {
+          toast.error("❌ Invalid username or password. Please try again.");
+        } else {
+          toast.error("❌ " + message);
+        }
+      } else {
+        toast.error("❌ Unable to login. Please check your connection and try again.");
+      }
     } finally {
       setLoading(false);
     }
@@ -69,21 +95,39 @@ const Login = () => {
         </div>
 
         <div className="space-y-4">
-          <Input type="text" placeholder="Username" autoComplete="username" onChange={(e) => setUsername(e.target.value)} startIcon={<User />} require />
-          <Input
-            type={showPassword ? "text" : "password"}
-            placeholder="Password"
-            autoComplete="current-password"
-            onChange={(e) => setPassword(e.target.value)}
-            startIcon={<Lock />}
-            endIcon={showPassword ? <Eye onClick={() => setShowPassword(false)} /> : <HideEye onClick={() => setShowPassword(true)} />}
-            require
-          />
+          <div>
+            <Input 
+              type="text" 
+              placeholder="Username" 
+              autoComplete="username" 
+              onChange={(e) => setUsername(e.target.value)} 
+              startIcon={<User />} 
+              require 
+            />
+            {username.length > 0 && username.length < 5 && (
+              <p className="text-xs text-amber-600 mt-1 ml-1">⚠️ Username seems too short</p>
+            )}
+          </div>
+          
+          <div>
+            <Input
+              type={showPassword ? "text" : "password"}
+              placeholder="Password"
+              autoComplete="current-password"
+              onChange={(e) => setPassword(e.target.value)}
+              startIcon={<Lock />}
+              endIcon={showPassword ? <Eye onClick={() => setShowPassword(false)} /> : <HideEye onClick={() => setShowPassword(true)} />}
+              require
+            />
+            {password.length > 0 && password.length < 6 && (
+              <p className="text-xs text-amber-600 mt-1 ml-1">⚠️ Password seems too short</p>
+            )}
+          </div>
         </div>
 
         <div className="text-center text-sm text-gray-600">
-          Don’t have an account?{" "}
-          <Link to="/signup" className="text-indigo-600 font-medium hover:underline">
+          Don't have an account?{" "}
+          <Link to="/signup" className="text-blue-600 font-medium hover:underline">
             Sign Up
           </Link>
         </div>
@@ -95,7 +139,7 @@ const Login = () => {
             disabled={loading}
             variant="primary"
             type="submit"
-            className="w-1/2 bg-gradient-to-r from-indigo-500 to-blue-500 hover:opacity-90"
+            className="w-1/2 bg-gradient-to-r from-blue-500 to-blue-600 hover:opacity-90"
           />
         </div>
       </form>
