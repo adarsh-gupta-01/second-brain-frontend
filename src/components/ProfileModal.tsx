@@ -10,6 +10,12 @@ interface FormState {
   bio: string
 }
 
+interface PasswordFormState {
+  currentPassword: string
+  newPassword: string
+  confirmPassword: string
+}
+
 interface ProfileModalProps {
   isOpen: boolean
   onClose: () => void
@@ -24,8 +30,18 @@ export default function ProfileModal({ isOpen, onClose }: ProfileModalProps) {
     avatar: avatar || '',
     bio: bio || '',
   })
+  const [passwordForm, setPasswordForm] = useState<PasswordFormState>({
+    currentPassword: '',
+    newPassword: '',
+    confirmPassword: '',
+  })
   const [loading, setLoading] = useState(false)
+  const [passwordLoading, setPasswordLoading] = useState(false)
   const [preview, setPreview] = useState<string | null>(avatar || null)
+  const [showChangePassword, setShowChangePassword] = useState(false)
+  const [showCurrentPassword, setShowCurrentPassword] = useState(false)
+  const [showNewPassword, setShowNewPassword] = useState(false)
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
 
   useEffect(() => {
     setForm({
@@ -78,6 +94,56 @@ export default function ProfileModal({ isOpen, onClose }: ProfileModalProps) {
     const { name, value } = e.target
     setForm(f => ({ ...f, [name]: value }))
     if (name === 'avatar') setPreview(value)
+  }
+
+  const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target
+    setPasswordForm(f => ({ ...f, [name]: value }))
+  }
+
+  const handleChangePassword = async () => {
+    const { currentPassword, newPassword, confirmPassword } = passwordForm
+
+    if (!currentPassword || !newPassword || !confirmPassword) {
+      toast.error('All password fields are required')
+      return
+    }
+
+    if (newPassword !== confirmPassword) {
+      toast.error('New password and confirm password do not match')
+      return
+    }
+
+    // Validate new password
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/
+    if (!passwordRegex.test(newPassword)) {
+      toast.error('Password must be at least 8 characters with uppercase, lowercase, digit & special character')
+      return
+    }
+
+    setPasswordLoading(true)
+    try {
+      const res = await axios.put(
+        `${apiKey}/change-password`, 
+        { currentPassword, newPassword },
+        { withCredentials: true }
+      )
+      if (res.data?.success) {
+        toast.success('Password changed successfully')
+        setPasswordForm({ currentPassword: '', newPassword: '', confirmPassword: '' })
+        setShowChangePassword(false)
+      } else {
+        toast.error(res.data?.message || 'Failed to change password')
+      }
+    } catch (err: unknown) {
+      console.error(err)
+      const message = err && typeof err === 'object' && 'response' in err 
+        ? (err as { response?: { data?: { message?: string } } })?.response?.data?.message || 'Something went wrong'
+        : 'Something went wrong'
+      toast.error(message)
+    } finally {
+      setPasswordLoading(false)
+    }
   }
 
   if (!isOpen) return null
@@ -171,7 +237,106 @@ export default function ProfileModal({ isOpen, onClose }: ProfileModalProps) {
             />
           </div>
 
-          {/* Save Button */}
+          {/* Change Password Section */}
+          <div className="border-t pt-6">
+            <button
+              onClick={() => setShowChangePassword(!showChangePassword)}
+              className="text-indigo-600 hover:text-indigo-700 font-medium text-sm"
+            >
+              {showChangePassword ? '− Hide Password Change' : '+ Change Password'}
+            </button>
+
+            {showChangePassword && (
+              <div className="mt-4 space-y-4 bg-gray-50 p-4 rounded-lg">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">Current Password</label>
+                  <div className="relative">
+                    <input
+                      type={showCurrentPassword ? "text" : "password"}
+                      name="currentPassword"
+                      value={passwordForm.currentPassword}
+                      onChange={handlePasswordChange}
+                      placeholder="Enter current password"
+                      className="w-full mt-1 p-2.5 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none pr-10"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowCurrentPassword(!showCurrentPassword)}
+                      className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                    >
+                      {showCurrentPassword ? '👁️' : '👁️‍🗨️'}
+                    </button>
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">New Password</label>
+                  <div className="relative">
+                    <input
+                      type={showNewPassword ? "text" : "password"}
+                      name="newPassword"
+                      value={passwordForm.newPassword}
+                      onChange={handlePasswordChange}
+                      placeholder="Enter new password"
+                      className="w-full mt-1 p-2.5 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none pr-10"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowNewPassword(!showNewPassword)}
+                      className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                    >
+                      {showNewPassword ? '👁️' : '👁️‍🗨️'}
+                    </button>
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">Confirm New Password</label>
+                  <div className="relative">
+                    <input
+                      type={showConfirmPassword ? "text" : "password"}
+                      name="confirmPassword"
+                      value={passwordForm.confirmPassword}
+                      onChange={handlePasswordChange}
+                      placeholder="Confirm new password"
+                      className="w-full mt-1 p-2.5 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none pr-10"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                      className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                    >
+                      {showConfirmPassword ? '👁️' : '👁️‍🗨️'}
+                    </button>
+                  </div>
+                </div>
+
+                <div className="text-xs text-gray-600">
+                  <p className="font-medium">Password must contain:</p>
+                  <ul className="list-disc list-inside mt-1 space-y-0.5 text-gray-500">
+                    <li>At least 8 characters</li>
+                    <li>Uppercase & lowercase letters</li>
+                    <li>At least one digit</li>
+                    <li>Special character (@$!%*?&#)</li>
+                  </ul>
+                </div>
+
+                <button
+                  onClick={handleChangePassword}
+                  disabled={passwordLoading}
+                  className={`w-full px-5 py-2.5 rounded-lg text-white font-medium transition-all duration-200 ${
+                    passwordLoading
+                      ? 'bg-indigo-400 cursor-not-allowed'
+                      : 'bg-indigo-600 hover:bg-indigo-700 shadow-md'
+                  }`}
+                >
+                  {passwordLoading ? 'Changing Password...' : 'Change Password'}
+                </button>
+              </div>
+            )}
+          </div>
+
+          {/* Save Profile Button */}
           <div className="flex justify-end pt-4">
             <button
               onClick={handleSave}
@@ -182,7 +347,7 @@ export default function ProfileModal({ isOpen, onClose }: ProfileModalProps) {
                   : 'bg-indigo-600 hover:bg-indigo-700 shadow-md'
               }`}
             >
-              {loading ? 'Saving...' : 'Save Changes'}
+              {loading ? 'Saving...' : 'Save Profile Changes'}
             </button>
           </div>
         </div>
