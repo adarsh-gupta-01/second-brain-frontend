@@ -49,8 +49,8 @@ const Signup = () => {
       return;
     }
     
-    if (firstName.trim().length < 6) {
-      toast.error("Name must be at least 6 characters long");
+    if (firstName.trim().length === 0) {
+      toast.error("Name cannot be empty");
       setIsSubmitting(false);
       return;
     }
@@ -121,14 +121,11 @@ const Signup = () => {
         </div>
         
         <div className="text-xs text-gray-600 space-y-1">
-          <p className="font-medium">Password Requirements:</p>
+          <p className="font-medium">Requirements:</p>
           <ul className="list-disc list-inside space-y-0.5 text-gray-500">
-            <li>At least 8 characters long</li>
-            <li>Contains uppercase & lowercase letters</li>
-            <li>Contains at least one digit</li>
-            <li>Contains special character (@$!%*?&#)</li>
+            <li>Username: min 6 characters (letters, digits, symbols allowed)</li>
+            <li>Password: min 8 characters with uppercase, lowercase, digit & special character (@$!%*?&#)</li>
           </ul>
-          <p className="mt-2 text-gray-500">Name and Username must be at least 6 characters</p>
         </div>
 
         <div className="text-center text-sm text-gray-600">
