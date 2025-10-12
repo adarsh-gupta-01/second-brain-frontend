@@ -27,9 +27,9 @@ const Signup = () => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { placeholder, value } = e.target;
-    // Convert placeholder to the expected form key. "FirstName" should map to "firstName"
+    // Convert placeholder to the expected form key. "Name" should map to "firstName"
     const lower = placeholder.toLowerCase();
-    const key = lower === 'firstname' ? 'firstName' : lower;
+    const key = lower === 'name' ? 'firstName' : lower;
     setFormData((prev) => ({
       ...prev,
       [key]: value,
@@ -41,8 +41,30 @@ const Signup = () => {
     setIsSubmitting(true);
 
     const { firstName, username, password } = formData;
+    
+    // Client-side validation
     if (!firstName || !username || !password) {
       toast.error("Please fill all fields");
+      setIsSubmitting(false);
+      return;
+    }
+    
+    if (firstName.trim().length < 6) {
+      toast.error("Name must be at least 6 characters long");
+      setIsSubmitting(false);
+      return;
+    }
+    
+    if (username.trim().length < 6) {
+      toast.error("Username must be at least 6 characters long");
+      setIsSubmitting(false);
+      return;
+    }
+    
+    // Password validation
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/;
+    if (!passwordRegex.test(password)) {
+      toast.error("Password must be at least 8 characters with uppercase, lowercase, digit & special character");
       setIsSubmitting(false);
       return;
     }
@@ -85,7 +107,7 @@ const Signup = () => {
         </div>
 
         <div className="space-y-4">
-          <Input type="text" placeholder="FirstName" autoComplete="given-name" onChange={handleChange} startIcon={<User />} require />
+          <Input type="text" placeholder="Name" autoComplete="given-name" onChange={handleChange} startIcon={<User />} require />
           <Input type="text" placeholder="Username" autoComplete="username" onChange={handleChange} startIcon={<User />} require />
           <Input
             type={showPassword ? "text" : "password"}
@@ -96,6 +118,17 @@ const Signup = () => {
             endIcon={showPassword ? <Eye onClick={() => setShowPassword(false)} /> : <HideEye onClick={() => setShowPassword(true)} />}
             require
           />
+        </div>
+        
+        <div className="text-xs text-gray-600 space-y-1">
+          <p className="font-medium">Password Requirements:</p>
+          <ul className="list-disc list-inside space-y-0.5 text-gray-500">
+            <li>At least 8 characters long</li>
+            <li>Contains uppercase & lowercase letters</li>
+            <li>Contains at least one digit</li>
+            <li>Contains special character (@$!%*?&#)</li>
+          </ul>
+          <p className="mt-2 text-gray-500">Name and Username must be at least 6 characters</p>
         </div>
 
         <div className="text-center text-sm text-gray-600">
