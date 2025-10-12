@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { Loader2 } from "lucide-react";
+import { AuthContext } from "../context/AuthContext";
 
 import Input from "../components/Input";
 import Button from "../components/Button";
@@ -13,6 +14,7 @@ import HideEye from "../icons/HideEye";
 
 const Signup = () => {
   const apiKey = import.meta.env.VITE_API_KEY;
+  const { refreshUser } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -53,8 +55,10 @@ const Signup = () => {
       );
 
       if (res.data.success) {
-        toast.success("Signup successful! Please login.");
-        navigate("/login");
+        toast.success("Signup successful! Welcome to Second Brain.");
+        // Refresh user context to load the authenticated session
+        await refreshUser();
+        navigate("/");
       }
     } catch (err) {
       const message = (axios.isAxiosError(err) && err.response?.data?.message) ? err.response.data.message : "Something went wrong";
