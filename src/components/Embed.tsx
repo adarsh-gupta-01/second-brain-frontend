@@ -212,9 +212,9 @@ export default function Embed({ type, link, content }: EmbedProps) {
   if (type === "note") {
     return (
       <div className={`${containerClass} p-6`}>
-        <div className="w-full bg-yellow-50 border border-yellow-200 rounded-lg p-4 overflow-y-auto shadow-sm">
+        <div className="w-full bg-amber-50 border border-amber-200 rounded-lg p-4 overflow-y-auto shadow-sm">
           <div className="flex items-center mb-3">
-            <span className="text-yellow-600 text-2xl mr-2">📝</span>
+            <span className="text-amber-600 text-2xl mr-2">📝</span>
             <span className="text-lg font-semibold text-gray-800">Note</span>
           </div>
           <p className="text-gray-700 whitespace-pre-wrap text-sm leading-relaxed">

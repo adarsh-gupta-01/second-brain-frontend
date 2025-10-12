@@ -189,7 +189,7 @@ export default function DetailedCardView() {
           <p className="text-slate-600 mb-6">{error || 'The content you\'re looking for could not be found.'}</p>
           <button
             onClick={() => navigate('/')}
-            className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
             Go Home
@@ -246,7 +246,7 @@ export default function DetailedCardView() {
               
               <button
                 onClick={() => setIsEditModalOpen(true)}
-                className="inline-flex items-center justify-center gap-1 sm:gap-2 px-2 sm:px-3 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors flex-1 sm:flex-initial text-sm"
+                className="inline-flex items-center justify-center gap-1 sm:gap-2 px-2 sm:px-3 py-2 bg-slate-600 text-white rounded-lg hover:bg-slate-700 transition-colors flex-1 sm:flex-initial text-sm"
                 title="Edit"
               >
                 <Edit className="w-4 h-4" />
@@ -256,7 +256,7 @@ export default function DetailedCardView() {
               <button
                 onClick={handleDelete}
                 disabled={deleting}
-                className="inline-flex items-center justify-center gap-1 sm:gap-2 px-2 sm:px-3 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors disabled:opacity-50 flex-1 sm:flex-initial text-sm"
+                className="inline-flex items-center justify-center gap-1 sm:gap-2 px-2 sm:px-3 py-2 bg-rose-600 text-white rounded-lg hover:bg-rose-700 transition-colors disabled:opacity-50 flex-1 sm:flex-initial text-sm"
                 title="Delete"
               >
                 <Trash className="w-4 h-4" />
@@ -292,7 +292,7 @@ export default function DetailedCardView() {
                   {content.tags.map((tag, i) => (
                     <span
                       key={i}
-                      className="inline-flex items-center px-2 sm:px-3 py-0.5 sm:py-1 rounded-full text-xs sm:text-sm font-medium bg-purple-100 text-purple-700 hover:bg-purple-200 transition-colors cursor-pointer"
+                      className="inline-flex items-center px-2 sm:px-3 py-0.5 sm:py-1 rounded-full text-xs sm:text-sm font-medium bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors cursor-pointer"
                     >
                       #{tag}
                     </span>

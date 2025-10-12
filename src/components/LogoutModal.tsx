@@ -68,7 +68,7 @@ export default function LogoutModal({ open, onClose }: LogoutModalProps) {
             type="button"
             onClick={handleLogout}
             disabled={loading}
-            className="px-5 py-2 rounded-lg bg-red-600 text-white font-medium hover:bg-red-700 transition disabled:opacity-50 flex items-center gap-2"
+            className="px-5 py-2 rounded-lg bg-rose-600 text-white font-medium hover:bg-rose-700 transition disabled:opacity-50 flex items-center gap-2"
           >
             <LogOut className="w-4 h-4" />
             {loading ? "Logging out..." : "Logout"}

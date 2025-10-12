@@ -155,12 +155,12 @@ export default function Card(props: CardProps) {
                 disabled={isCopying}
                 className={`p-1.5 rounded-lg transition-all duration-200 ${
                   isCopying ? 'opacity-60 cursor-not-allowed' : 
-                  copySuccess ? 'bg-green-50 border border-green-200' : 'hover:bg-blue-50'
+                  copySuccess ? 'bg-emerald-50 border border-emerald-200' : 'hover:bg-blue-50'
                 }`}
                 title={copySuccess ? 'Link Copied!' : 'Copy Link'}
               >
                 {copySuccess ? (
-                  <Check className="w-4 h-4 text-green-600" />
+                  <Check className="w-4 h-4 text-emerald-600" />
                 ) : (
                   <Copy className="w-4 h-4 text-blue-600" />
                 )}
@@ -171,10 +171,10 @@ export default function Card(props: CardProps) {
                 e.stopPropagation()
                 handleEdit()
               }}
-              className="p-1.5 rounded-lg transition-all duration-200 hover:bg-green-50"
+              className="p-1.5 rounded-lg transition-all duration-200 hover:bg-slate-50"
               title="Edit"
             >
-              <Edit className="w-4 h-4 text-green-600" />
+              <Edit className="w-4 h-4 text-slate-600" />
             </button>
             <button
               onClick={(e) => {
@@ -224,7 +224,7 @@ export default function Card(props: CardProps) {
           {props.tags.slice(0, 3).map((tag, i) => (
             <span
               key={i}
-              className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-700"
+              className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-slate-100 text-slate-700"
             >
               #{tag}
             </span>

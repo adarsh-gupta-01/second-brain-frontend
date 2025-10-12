@@ -196,7 +196,7 @@ const HomePage = () => {
                 className="w-7 h-7 sm:w-8 sm:h-8 md:w-9 md:h-9 rounded-lg sm:rounded-xl object-cover border-2 border-slate-200 shadow-sm"
                 onError={(e) => { (e.currentTarget as HTMLImageElement).src = '/logo.png' }}
               />
-              <div className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 sm:w-3 sm:h-3 bg-green-500 border-2 border-white rounded-full"></div>
+              <div className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 sm:w-3 sm:h-3 bg-emerald-500 border-2 border-white rounded-full"></div>
             </div>
             <div className="hidden md:flex flex-col items-start">
               <span className="text-xs sm:text-sm font-semibold text-slate-800 max-w-[80px] sm:max-w-[120px] truncate">

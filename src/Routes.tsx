@@ -23,7 +23,7 @@ const AppRouter = () => {
               {/* Logo and Title Section */}
               <div className="flex items-center gap-4">
                 <div className="relative group">
-                  <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-blue-600 rounded-2xl blur opacity-30 group-hover:opacity-50 transition duration-300"></div>
+                  <div className="absolute -inset-1 bg-gradient-to-r from-slate-600 to-blue-600 rounded-2xl blur opacity-30 group-hover:opacity-50 transition duration-300"></div>
                   <img
                     src="/logo.png"
                     alt="Second Brain Logo"

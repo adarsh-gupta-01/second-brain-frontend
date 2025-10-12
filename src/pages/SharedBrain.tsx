@@ -192,7 +192,7 @@ export default function SharedBrain() {
           <p className="text-slate-600 mb-6">{error}</p>
           <button
             onClick={() => navigate('/')}
-            className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
             Go Home
@@ -218,7 +218,7 @@ export default function SharedBrain() {
               </button>
               
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full flex items-center justify-center">
+                <div className="w-10 h-10 bg-slate-700 rounded-full flex items-center justify-center">
                   <User className="w-5 h-5 text-white" />
                 </div>
                 <div>
@@ -234,7 +234,7 @@ export default function SharedBrain() {
 
             <button
               onClick={handleSharePage}
-              className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
+              className="inline-flex items-center gap-2 px-4 py-2 bg-slate-700 text-white rounded-lg hover:bg-slate-800 transition-colors"
             >
               <Share2 className="w-4 h-4" />
               Share

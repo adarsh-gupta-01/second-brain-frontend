@@ -166,7 +166,7 @@ export default function ShareModal() {
               onClick={handleCopy}
               disabled={copying || !shareLink}
               className={`px-3 py-2 rounded-lg text-white transition-all duration-150
-                ${(!shareLink || copying) ? 'bg-gray-300 text-gray-600 cursor-not-allowed' : 'bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800'}`}
+                ${(!shareLink || copying) ? 'bg-gray-300 text-gray-600 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700 active:bg-blue-800'}`}
             >
               {loadingShare ? 'Loading...' : (copying ? 'Copied!' : 'Copy')}
             </button>
@@ -177,7 +177,7 @@ export default function ShareModal() {
             onClick={handleNativeShare}
             disabled={!shareLink}
             className={`w-full px-4 py-2.5 rounded-lg font-medium text-white transition-all duration-200 flex items-center justify-center gap-2
-              ${!shareLink ? 'bg-gray-300 cursor-not-allowed' : 'bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 active:scale-95 shadow-md hover:shadow-lg'}`}
+              ${!shareLink ? 'bg-gray-300 cursor-not-allowed' : 'bg-slate-700 hover:bg-slate-800 active:scale-95 shadow-md hover:shadow-lg'}`}
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
@@ -187,7 +187,7 @@ export default function ShareModal() {
         </div>
 
         {fetchError && (
-          <div className="text-sm text-yellow-600 mb-3">{fetchError}. You can enable sharing below to create a link.</div>
+          <div className="text-sm text-amber-600 mb-3">{fetchError}. You can enable sharing below to create a link.</div>
         )}
 
         {/* Sharing Status */}
@@ -202,7 +202,7 @@ export default function ShareModal() {
             onClick={handleToggle}
             disabled={loading}
             className={`relative w-14 h-7 rounded-full transition-colors duration-300 focus:outline-none
-              ${active ? 'bg-green-500' : 'bg-gray-300'} ${loading ? 'opacity-60 cursor-not-allowed' : 'cursor-pointer'}`}
+              ${active ? 'bg-blue-600' : 'bg-gray-300'} ${loading ? 'opacity-60 cursor-not-allowed' : 'cursor-pointer'}`}
           >
             <span
               className={`absolute top-0.5 left-0.5 w-6 h-6 bg-white rounded-full shadow transform transition-transform duration-300

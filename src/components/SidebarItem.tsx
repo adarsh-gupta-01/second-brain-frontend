@@ -29,16 +29,16 @@ const getBrandColors = (itemKey: string) => {
       shadow: 'shadow-red-200/50'
     },
     instagram: {
-      bg: 'bg-gradient-to-r from-purple-50 to-pink-50',
-      text: 'text-purple-600',
-      border: 'border-purple-200',
-      shadow: 'shadow-purple-200/50'
+      bg: 'bg-pink-50',
+      text: 'text-pink-600',
+      border: 'border-pink-200',
+      shadow: 'shadow-pink-200/50'
     },
     image: {
-      bg: 'bg-green-50',
-      text: 'text-green-600',
-      border: 'border-green-200',
-      shadow: 'shadow-green-200/50'
+      bg: 'bg-emerald-50',
+      text: 'text-emerald-600',
+      border: 'border-emerald-200',
+      shadow: 'shadow-emerald-200/50'
     },
     doc: {
       bg: 'bg-orange-50',
