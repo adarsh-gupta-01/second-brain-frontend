@@ -205,60 +205,62 @@ export default function DetailedCardView() {
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
       {/* Header */}
       <header className="bg-white/80 backdrop-blur-md border-b border-slate-200 sticky top-0 z-10">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
+        <div className="max-w-4xl mx-auto px-3 sm:px-6 lg:px-8 py-3 sm:py-4">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0">
+            <div className="flex items-center gap-2 sm:gap-4 w-full sm:w-auto">
               <button
                 onClick={() => navigate('/')}
-                className="p-2 hover:bg-slate-100 rounded-lg transition-colors"
+                className="p-2 hover:bg-slate-100 rounded-lg transition-colors flex-shrink-0"
                 title="Go Back"
               >
                 <ArrowLeft className="w-5 h-5 text-slate-600" />
               </button>
               
-              <div className="flex items-center gap-3">
-                {getTypeIcon(cardType)}
-                <div>
-                  <h1 className="text-xl font-bold text-slate-800 line-clamp-1">
+              <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
+                <div className="flex-shrink-0">
+                  {getTypeIcon(cardType)}
+                </div>
+                <div className="min-w-0 flex-1">
+                  <h1 className="text-base sm:text-xl font-bold text-slate-800 line-clamp-1">
                     {content.title}
                   </h1>
-                  <p className="text-sm text-slate-600 capitalize">
-                    {content.type} • {new Date(content.createdAt).toLocaleDateString()}
+                  <p className="text-xs sm:text-sm text-slate-600 capitalize">
+                    {content.type} • {new Date(content.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
                   </p>
                 </div>
               </div>
             </div>
 
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1.5 sm:gap-2 w-full sm:w-auto">
               {content.link && (
                 <button
                   onClick={handleCopyLink}
                   disabled={copying}
-                  className="inline-flex items-center gap-2 px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50"
+                  className="inline-flex items-center justify-center gap-1 sm:gap-2 px-2 sm:px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 flex-1 sm:flex-initial text-sm"
                   title="Copy Link"
                 >
                   <Copy className="w-4 h-4" />
-                  {copying ? 'Copied!' : 'Copy Link'}
+                  <span className="hidden xs:inline">{copying ? 'Copied!' : 'Copy'}</span>
                 </button>
               )}
               
               <button
                 onClick={() => setIsEditModalOpen(true)}
-                className="inline-flex items-center gap-2 px-3 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+                className="inline-flex items-center justify-center gap-1 sm:gap-2 px-2 sm:px-3 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors flex-1 sm:flex-initial text-sm"
                 title="Edit"
               >
                 <Edit className="w-4 h-4" />
-                Edit
+                <span className="hidden xs:inline">Edit</span>
               </button>
               
               <button
                 onClick={handleDelete}
                 disabled={deleting}
-                className="inline-flex items-center gap-2 px-3 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors disabled:opacity-50"
+                className="inline-flex items-center justify-center gap-1 sm:gap-2 px-2 sm:px-3 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors disabled:opacity-50 flex-1 sm:flex-initial text-sm"
                 title="Delete"
               >
                 <Trash className="w-4 h-4" />
-                {deleting ? 'Deleting...' : 'Delete'}
+                <span className="hidden xs:inline">{deleting ? 'Deleting...' : 'Delete'}</span>
               </button>
             </div>
           </div>
@@ -266,10 +268,10 @@ export default function DetailedCardView() {
       </header>
 
       {/* Content */}
-      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main className="max-w-4xl mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-8">
         <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
           {/* Embedded Content */}
-          <div className="p-6">
+          <div className="p-3 sm:p-6">
             <Embed
               content={content.content}
               type={cardType}
@@ -278,19 +280,19 @@ export default function DetailedCardView() {
           </div>
 
           {/* Details */}
-          <div className="border-t border-slate-200 p-6">
+          <div className="border-t border-slate-200 p-3 sm:p-6">
             {/* Tags */}
             {content.tags && content.tags.length > 0 && (
-              <div className="mb-6">
-                <div className="flex items-center gap-2 mb-3">
+              <div className="mb-4 sm:mb-6">
+                <div className="flex items-center gap-2 mb-2 sm:mb-3">
                   <Tag className="w-4 h-4 text-slate-500" />
                   <span className="text-sm font-medium text-slate-700">Tags</span>
                 </div>
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-1.5 sm:gap-2">
                   {content.tags.map((tag, i) => (
                     <span
                       key={i}
-                      className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-purple-100 text-purple-700 hover:bg-purple-200 transition-colors cursor-pointer"
+                      className="inline-flex items-center px-2 sm:px-3 py-0.5 sm:py-1 rounded-full text-xs sm:text-sm font-medium bg-purple-100 text-purple-700 hover:bg-purple-200 transition-colors cursor-pointer"
                     >
                       #{tag}
                     </span>
@@ -301,52 +303,54 @@ export default function DetailedCardView() {
 
             {/* Content/Notes */}
             {content.content && (
-              <div className="mb-6">
-                <div className="flex items-center gap-2 mb-3">
+              <div className="mb-4 sm:mb-6">
+                <div className="flex items-center gap-2 mb-2 sm:mb-3">
                   <FileText className="w-4 h-4 text-slate-500" />
                   <span className="text-sm font-medium text-slate-700">Notes</span>
                 </div>
-                <div className="bg-slate-50 rounded-lg p-4">
-                  <p className="text-slate-700 whitespace-pre-wrap">{content.content}</p>
+                <div className="bg-slate-50 rounded-lg p-3 sm:p-4">
+                  <p className="text-sm sm:text-base text-slate-700 whitespace-pre-wrap">{content.content}</p>
                 </div>
               </div>
             )}
 
             {/* Link */}
             {content.link && (
-              <div className="mb-6">
-                <div className="flex items-center gap-2 mb-3">
+              <div className="mb-4 sm:mb-6">
+                <div className="flex items-center gap-2 mb-2 sm:mb-3">
                   <ExternalLink className="w-4 h-4 text-slate-500" />
                   <span className="text-sm font-medium text-slate-700">Link</span>
                 </div>
-                <div className="flex items-center gap-2 p-3 bg-slate-50 rounded-lg">
-                  <span className="text-slate-700 break-all flex-1">{content.link}</span>
-                  <button
-                    onClick={handleCopyLink}
-                    disabled={copying}
-                    className="p-2 hover:bg-slate-200 rounded-lg transition-colors disabled:opacity-50"
-                    title="Copy Link"
-                  >
-                    <Copy className="w-4 h-4 text-slate-600" />
-                  </button>
-                  <a
-                    href={content.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="p-2 hover:bg-slate-200 rounded-lg transition-colors"
-                    title="Open Link"
-                  >
-                    <ExternalLink className="w-4 h-4 text-slate-600" />
-                  </a>
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 p-3 bg-slate-50 rounded-lg">
+                  <span className="text-xs sm:text-sm text-slate-700 break-all flex-1 min-w-0">{content.link}</span>
+                  <div className="flex items-center gap-2 flex-shrink-0">
+                    <button
+                      onClick={handleCopyLink}
+                      disabled={copying}
+                      className="p-2 hover:bg-slate-200 rounded-lg transition-colors disabled:opacity-50"
+                      title="Copy Link"
+                    >
+                      <Copy className="w-4 h-4 text-slate-600" />
+                    </button>
+                    <a
+                      href={content.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-2 hover:bg-slate-200 rounded-lg transition-colors"
+                      title="Open Link"
+                    >
+                      <ExternalLink className="w-4 h-4 text-slate-600" />
+                    </a>
+                  </div>
                 </div>
               </div>
             )}
 
             {/* Metadata */}
-            <div className="flex items-center gap-4 text-sm text-slate-500 pt-4 border-t border-slate-200">
+            <div className="flex flex-wrap items-center gap-3 sm:gap-4 text-xs sm:text-sm text-slate-500 pt-3 sm:pt-4 border-t border-slate-200">
               <div className="flex items-center gap-1">
-                <Calendar className="w-4 h-4" />
-                <span>Created {new Date(content.createdAt).toLocaleDateString()}</span>
+                <Calendar className="w-3 h-3 sm:w-4 sm:h-4" />
+                <span>Created {new Date(content.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
               </div>
               <div className="flex items-center gap-1">
                 <span className="capitalize">{content.type}</span>
