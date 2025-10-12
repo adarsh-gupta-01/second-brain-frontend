@@ -58,17 +58,16 @@ const Login = () => {
         navigate("/");
       }
     } catch (err) {
-      if (axios.isAxiosError(err) && err.response?.data?.message) {
-        const message = err.response.data.message;
-        // Provide specific, user-friendly error messages
-        if (message.toLowerCase().includes("user not found") || message.toLowerCase().includes("doesn't exist")) {
+      if (axios.isAxiosError(err) && err.response) {
+        // Show user-friendly error message for any login failure
+        const message = err.response.data?.message;
+        if (message?.toLowerCase().includes("user not found") || message?.toLowerCase().includes("doesn't exist")) {
           toast.error("❌ Username not found. Please check your username or sign up.");
-        } else if (message.toLowerCase().includes("password") && message.toLowerCase().includes("incorrect")) {
+        } else if (message?.toLowerCase().includes("password") && message?.toLowerCase().includes("incorrect")) {
           toast.error("❌ Incorrect password. Please try again.");
-        } else if (message.toLowerCase().includes("invalid credentials")) {
-          toast.error("❌ Invalid username or password. Please try again.");
         } else {
-          toast.error("❌ " + message);
+          // Generic error for any other authentication failure
+          toast.error("❌ Check your username or password and try again.");
         }
       } else {
         toast.error("❌ Unable to login. Please check your connection and try again.");
