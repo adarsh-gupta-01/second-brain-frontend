@@ -164,14 +164,53 @@ export default function Embed({ type, link, content }: EmbedProps) {
   // 📄 DOCUMENT
   if (type === "doc") {
     const isPDF = !!link && /\.pdf($|\?)/i.test(link)
-    const gdocs = link ? `https://docs.google.com/gview?embedded=1&url=${encodeURIComponent(link)}` : undefined
+    
     return (
       <div className={`${containerClass} p-4`}>
         {link ? (
           isPDF ? (
-            <iframe src={link} title="PDF" className="w-full h-[420px] border rounded" />
+            <div className="w-full flex flex-col items-center justify-center space-y-4 bg-white border-2 border-gray-200 rounded-lg p-6 shadow-sm">
+              <div className="text-center">
+                <div className="w-20 h-20 mx-auto mb-4 bg-red-100 rounded-full flex items-center justify-center">
+                  <svg className="w-10 h-10 text-red-600" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clipRule="evenodd" />
+                  </svg>
+                </div>
+                <h3 className="text-lg font-semibold text-gray-800 mb-2">PDF Document</h3>
+                <p className="text-sm text-gray-600 mb-4">Click below to view the PDF document</p>
+              </div>
+              
+              <a
+                href={link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-all duration-200 shadow-md hover:shadow-lg font-medium"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                </svg>
+                Open PDF
+              </a>
+              
+              {/* Try to show PDF in iframe as fallback */}
+              <div className="w-full">
+                <iframe 
+                  src={`https://docs.google.com/gview?url=${encodeURIComponent(link)}&embedded=true`} 
+                  title="PDF Preview" 
+                  className="w-full h-[300px] border rounded"
+                  onError={(e) => {
+                    // Hide iframe if it fails to load
+                    (e.target as HTMLIFrameElement).style.display = 'none'
+                  }}
+                />
+              </div>
+            </div>
           ) : (
-            <iframe src={gdocs} title="Document" className="w-full h-[420px] border rounded" />
+            <iframe 
+              src={`https://docs.google.com/gview?embedded=1&url=${encodeURIComponent(link)}`} 
+              title="Document" 
+              className="w-full h-[420px] border rounded" 
+            />
           )
         ) : (
           <div className="text-gray-400">No document link provided</div>
@@ -217,11 +256,36 @@ export default function Embed({ type, link, content }: EmbedProps) {
             <audio src={link} controls className="w-full max-w-lg mb-3" />
           )}
           {isPDF && link && (
-            <iframe src={link} className="w-full h-[360px] border rounded mb-3" title="PDF Preview" />
+            <div className="w-full flex flex-col items-center space-y-3">
+              <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mb-2">
+                <svg className="w-8 h-8 text-red-600" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clipRule="evenodd" />
+                </svg>
+              </div>
+              <p className="text-sm text-gray-600 font-medium">PDF Document</p>
+              {/* Try to embed PDF with Google Docs Viewer */}
+              <iframe 
+                src={`https://docs.google.com/gview?url=${encodeURIComponent(link)}&embedded=true`}
+                className="w-full h-[300px] border rounded mb-3" 
+                title="PDF Preview"
+                onError={(e) => {
+                  // Hide iframe if it fails to load
+                  (e.target as HTMLIFrameElement).style.display = 'none'
+                }}
+              />
+            </div>
           )}
           {!link && <div className="text-gray-400">No file available</div>}
           {link && (
-            <a href={link} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-700 underline text-sm">
+            <a 
+              href={link} 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium shadow-sm"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+              </svg>
               Open File
             </a>
           )}
