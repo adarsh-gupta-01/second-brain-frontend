@@ -166,47 +166,72 @@ export default function Embed({ type, link, content }: EmbedProps) {
   // 📄 DOCUMENT
   if (type === "doc") {
     const isPDF = !!link && /\.pdf($|\?)/i.test(link)
+    const fileName = link ? decodeURIComponent(link.split('/').pop()?.split('?')[0] || 'document') : 'document'
     
     return (
       <div className={`${containerClass} p-4`}>
         {link ? (
-          isPDF ? (
-            <div className="w-full space-y-3">
-              {/* PDF Preview - Try direct embed first, Google Docs viewer as fallback */}
-              <div className="relative w-full h-[400px] border border-gray-300 rounded-lg overflow-hidden bg-gray-100">
-                <iframe 
-                  src={link} 
-                  title="PDF Preview" 
-                  className="absolute inset-0 w-full h-full"
-                  onError={(e) => {
-                    // If direct PDF fails, try Google Docs viewer
-                    const iframe = e.target as HTMLIFrameElement
-                    if (!iframe.src.includes('docs.google.com')) {
-                      iframe.src = `https://docs.google.com/gview?url=${encodeURIComponent(link)}&embedded=true`
-                    }
-                  }}
-                />
+          <div className="w-full space-y-3">
+            {/* Document Preview Card */}
+            <div className="bg-white border-2 border-gray-200 rounded-lg p-4 flex flex-col items-center space-y-3">
+              {/* Document Icon & Info */}
+              <div className="flex items-center gap-3 w-full">
+                <div className="flex-shrink-0">
+                  {isPDF ? (
+                    <svg className="w-12 h-12 text-red-500" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18.5,9H13V3.5L18.5,9M6,20V4H11V10H18V20H6Z"/>
+                    </svg>
+                  ) : (
+                    <svg className="w-12 h-12 text-blue-500" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
+                    </svg>
+                  )}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-medium text-gray-900 truncate">{fileName}</p>
+                  <p className="text-xs text-gray-500">{isPDF ? 'PDF Document' : 'Document'}</p>
+                </div>
               </div>
-              {/* Open PDF Button */}
-              <a
-                href={link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-800 transition-colors text-sm font-medium"
-              >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                </svg>
-                Open PDF in New Tab
-              </a>
+
+              {/* Preview iframe - using Google Docs viewer for reliability */}
+              {isPDF && (
+                <div className="w-full">
+                  <iframe 
+                    src={`https://docs.google.com/viewer?url=${encodeURIComponent(link)}&embedded=true`}
+                    title="Document Preview" 
+                    className="w-full h-[300px] border border-gray-200 rounded bg-gray-50"
+                    sandbox="allow-scripts allow-same-origin"
+                  />
+                </div>
+              )}
+
+              {/* Action Buttons */}
+              <div className="flex gap-2 w-full">
+                <a
+                  href={link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                  </svg>
+                  Open Document
+                </a>
+                <a
+                  href={link}
+                  download
+                  className="px-4 py-2.5 bg-gray-700 text-white rounded-lg hover:bg-gray-800 transition-colors text-sm font-medium"
+                  title="Download"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                  </svg>
+                </a>
+              </div>
             </div>
-          ) : (
-            <iframe 
-              src={`https://docs.google.com/gview?embedded=1&url=${encodeURIComponent(link)}`} 
-              title="Document" 
-              className="w-full h-[420px] border rounded" 
-            />
-          )
+          </div>
         ) : (
           <div className="text-gray-400">No document link provided</div>
         )}
@@ -237,10 +262,11 @@ export default function Embed({ type, link, content }: EmbedProps) {
     const isPDF = !!link && /\.pdf($|\?)/i.test(link)
     const isVideo = !!link && /\.(mp4|webm|ogg)($|\?)/i.test(link)
     const isAudio = !!link && /\.(mp3|wav|ogg)($|\?)/i.test(link)
+    const fileName = link ? decodeURIComponent(link.split('/').pop()?.split('?')[0] || 'file') : 'file'
 
     return (
       <div className={`${containerClass} p-4`}>
-        <div className="w-full flex flex-col items-center text-center">
+        <div className="w-full flex flex-col items-center">
           {isImage && link && (
             <img 
               src={link} 
@@ -248,46 +274,110 @@ export default function Embed({ type, link, content }: EmbedProps) {
               className="w-full max-w-sm rounded shadow-sm mb-3 object-contain cursor-pointer hover:opacity-90 transition-opacity" 
               onClick={() => window.open(link, '_blank')}
               title="Click to open full image"
+              onError={(e) => {
+                // Show error placeholder if image fails to load
+                const img = e.target as HTMLImageElement
+                img.style.display = 'none'
+                const parent = img.parentElement
+                if (parent && !parent.querySelector('.error-placeholder')) {
+                  const errorDiv = document.createElement('div')
+                  errorDiv.className = 'error-placeholder text-center p-8 bg-gray-50 rounded border-2 border-dashed border-gray-300'
+                  errorDiv.innerHTML = `
+                    <svg class="w-16 h-16 mx-auto text-gray-400 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                    <p class="text-sm text-gray-500 mb-2">Image unavailable</p>
+                    <p class="text-xs text-gray-400">The file may have been deleted or moved</p>
+                  `
+                  parent.appendChild(errorDiv)
+                }
+              }}
             />
           )}
           {isVideo && link && (
-            <video src={link} controls className="w-full max-w-lg rounded mb-3" />
+            <video 
+              src={link} 
+              controls 
+              className="w-full max-w-lg rounded mb-3"
+              onError={(e) => {
+                const video = e.target as HTMLVideoElement
+                video.style.display = 'none'
+                const parent = video.parentElement
+                if (parent && !parent.querySelector('.error-placeholder')) {
+                  const errorDiv = document.createElement('div')
+                  errorDiv.className = 'error-placeholder text-center p-8 bg-gray-50 rounded border-2 border-dashed border-gray-300'
+                  errorDiv.innerHTML = `<p class="text-sm text-gray-500">Video unavailable</p>`
+                  parent.appendChild(errorDiv)
+                }
+              }}
+            />
           )}
           {isAudio && link && (
-            <audio src={link} controls className="w-full max-w-lg mb-3" />
+            <audio 
+              src={link} 
+              controls 
+              className="w-full max-w-lg mb-3"
+              onError={(e) => {
+                const audio = e.target as HTMLAudioElement
+                audio.style.display = 'none'
+                const parent = audio.parentElement
+                if (parent && !parent.querySelector('.error-placeholder')) {
+                  const errorDiv = document.createElement('div')
+                  errorDiv.className = 'error-placeholder text-center p-4 bg-gray-50 rounded border border-gray-300'
+                  errorDiv.innerHTML = `<p class="text-sm text-gray-500">Audio unavailable</p>`
+                  parent.appendChild(errorDiv)
+                }
+              }}
+            />
           )}
           {isPDF && link && (
             <div className="w-full space-y-3 mb-3">
-              {/* PDF Preview - Try direct embed first, Google Docs viewer as fallback */}
-              <div className="relative w-full h-[400px] border border-gray-300 rounded-lg overflow-hidden bg-gray-100">
+              {/* Document Card with Preview */}
+              <div className="bg-white border-2 border-gray-200 rounded-lg p-4">
+                <div className="flex items-center gap-3 mb-3">
+                  <svg className="w-10 h-10 text-red-500" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18.5,9H13V3.5L18.5,9M6,20V4H11V10H18V20H6Z"/>
+                  </svg>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-medium text-gray-900 truncate">{fileName}</p>
+                    <p className="text-xs text-gray-500">PDF Document</p>
+                  </div>
+                </div>
                 <iframe 
-                  src={link}
-                  className="absolute inset-0 w-full h-full" 
+                  src={`https://docs.google.com/viewer?url=${encodeURIComponent(link)}&embedded=true`}
+                  className="w-full h-[300px] border border-gray-200 rounded bg-gray-50" 
                   title="PDF Preview"
-                  onError={(e) => {
-                    // If direct PDF fails, try Google Docs viewer
-                    const iframe = e.target as HTMLIFrameElement
-                    if (!iframe.src.includes('docs.google.com')) {
-                      iframe.src = `https://docs.google.com/gview?url=${encodeURIComponent(link)}&embedded=true`
-                    }
-                  }}
+                  sandbox="allow-scripts allow-same-origin"
                 />
               </div>
             </div>
           )}
           {!link && <div className="text-gray-400">No file available</div>}
           {link && (
-            <a 
-              href={link} 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="inline-flex items-center gap-2 px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-800 transition-colors text-sm font-medium"
-            >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-              </svg>
-              Open File in New Tab
-            </a>
+            <div className="flex gap-2 w-full max-w-lg">
+              <a 
+                href={link} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                </svg>
+                Open File
+              </a>
+              <a
+                href={link}
+                download
+                className="px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-800 transition-colors text-sm font-medium"
+                title="Download"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                </svg>
+              </a>
+            </div>
           )}
         </div>
       </div>
