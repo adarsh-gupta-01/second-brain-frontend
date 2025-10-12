@@ -47,7 +47,9 @@ export default function Embed({ type, link, content }: EmbedProps) {
           <img
             src={link}
             alt="Embedded content"
-            className="max-w-full max-h-[300px] object-contain rounded-md shadow-sm"
+            className="max-w-full max-h-[300px] object-contain rounded-md shadow-sm cursor-pointer hover:opacity-90 transition-opacity"
+            onClick={() => window.open(link, '_blank')}
+            title="Click to open full image"
           />
         ) : (
           <div className="text-gray-400">No image available</div>
@@ -169,41 +171,28 @@ export default function Embed({ type, link, content }: EmbedProps) {
       <div className={`${containerClass} p-4`}>
         {link ? (
           isPDF ? (
-            <div className="w-full flex flex-col items-center justify-center space-y-4 bg-white border-2 border-gray-200 rounded-lg p-6 shadow-sm">
-              <div className="text-center">
-                <div className="w-20 h-20 mx-auto mb-4 bg-red-100 rounded-full flex items-center justify-center">
-                  <svg className="w-10 h-10 text-red-600" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clipRule="evenodd" />
-                  </svg>
-                </div>
-                <h3 className="text-lg font-semibold text-gray-800 mb-2">PDF Document</h3>
-                <p className="text-sm text-gray-600 mb-4">Click below to view the PDF document</p>
-              </div>
-              
+            <div className="w-full space-y-3">
+              {/* PDF Preview */}
+              <iframe 
+                src={`https://docs.google.com/gview?url=${encodeURIComponent(link)}&embedded=true`} 
+                title="PDF Preview" 
+                className="w-full h-[400px] border border-gray-300 rounded-lg"
+                onError={(e) => {
+                  (e.target as HTMLIFrameElement).style.display = 'none'
+                }}
+              />
+              {/* Open PDF Button */}
               <a
                 href={link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-all duration-200 shadow-md hover:shadow-lg font-medium"
+                className="inline-flex items-center gap-2 px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-800 transition-colors text-sm font-medium"
               >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                 </svg>
                 Open PDF
               </a>
-              
-              {/* Try to show PDF in iframe as fallback */}
-              <div className="w-full">
-                <iframe 
-                  src={`https://docs.google.com/gview?url=${encodeURIComponent(link)}&embedded=true`} 
-                  title="PDF Preview" 
-                  className="w-full h-[300px] border rounded"
-                  onError={(e) => {
-                    // Hide iframe if it fails to load
-                    (e.target as HTMLIFrameElement).style.display = 'none'
-                  }}
-                />
-              </div>
             </div>
           ) : (
             <iframe 
@@ -247,7 +236,13 @@ export default function Embed({ type, link, content }: EmbedProps) {
       <div className={`${containerClass} p-4`}>
         <div className="w-full flex flex-col items-center text-center">
           {isImage && link && (
-            <img src={link} alt="Uploaded" className="w-full max-w-sm rounded shadow-sm mb-3 object-contain" />
+            <img 
+              src={link} 
+              alt="Uploaded" 
+              className="w-full max-w-sm rounded shadow-sm mb-3 object-contain cursor-pointer hover:opacity-90 transition-opacity" 
+              onClick={() => window.open(link, '_blank')}
+              title="Click to open full image"
+            />
           )}
           {isVideo && link && (
             <video src={link} controls className="w-full max-w-lg rounded mb-3" />
@@ -256,20 +251,13 @@ export default function Embed({ type, link, content }: EmbedProps) {
             <audio src={link} controls className="w-full max-w-lg mb-3" />
           )}
           {isPDF && link && (
-            <div className="w-full flex flex-col items-center space-y-3">
-              <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mb-2">
-                <svg className="w-8 h-8 text-red-600" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clipRule="evenodd" />
-                </svg>
-              </div>
-              <p className="text-sm text-gray-600 font-medium">PDF Document</p>
-              {/* Try to embed PDF with Google Docs Viewer */}
+            <div className="w-full space-y-3">
+              {/* PDF Preview */}
               <iframe 
                 src={`https://docs.google.com/gview?url=${encodeURIComponent(link)}&embedded=true`}
-                className="w-full h-[300px] border rounded mb-3" 
+                className="w-full h-[400px] border border-gray-300 rounded-lg" 
                 title="PDF Preview"
                 onError={(e) => {
-                  // Hide iframe if it fails to load
                   (e.target as HTMLIFrameElement).style.display = 'none'
                 }}
               />
@@ -281,7 +269,7 @@ export default function Embed({ type, link, content }: EmbedProps) {
               href={link} 
               target="_blank" 
               rel="noopener noreferrer" 
-              className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium shadow-sm"
+              className="inline-flex items-center gap-2 px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-800 transition-colors text-sm font-medium"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
