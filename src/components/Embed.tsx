@@ -172,15 +172,21 @@ export default function Embed({ type, link, content }: EmbedProps) {
         {link ? (
           isPDF ? (
             <div className="w-full space-y-3">
-              {/* PDF Preview */}
-              <iframe 
-                src={`https://docs.google.com/gview?url=${encodeURIComponent(link)}&embedded=true`} 
-                title="PDF Preview" 
-                className="w-full h-[400px] border border-gray-300 rounded-lg"
-                onError={(e) => {
-                  (e.target as HTMLIFrameElement).style.display = 'none'
-                }}
-              />
+              {/* PDF Preview - Try direct embed first, Google Docs viewer as fallback */}
+              <div className="relative w-full h-[400px] border border-gray-300 rounded-lg overflow-hidden bg-gray-100">
+                <iframe 
+                  src={link} 
+                  title="PDF Preview" 
+                  className="absolute inset-0 w-full h-full"
+                  onError={(e) => {
+                    // If direct PDF fails, try Google Docs viewer
+                    const iframe = e.target as HTMLIFrameElement
+                    if (!iframe.src.includes('docs.google.com')) {
+                      iframe.src = `https://docs.google.com/gview?url=${encodeURIComponent(link)}&embedded=true`
+                    }
+                  }}
+                />
+              </div>
               {/* Open PDF Button */}
               <a
                 href={link}
@@ -191,7 +197,7 @@ export default function Embed({ type, link, content }: EmbedProps) {
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                 </svg>
-                Open PDF
+                Open PDF in New Tab
               </a>
             </div>
           ) : (
@@ -251,16 +257,22 @@ export default function Embed({ type, link, content }: EmbedProps) {
             <audio src={link} controls className="w-full max-w-lg mb-3" />
           )}
           {isPDF && link && (
-            <div className="w-full space-y-3">
-              {/* PDF Preview */}
-              <iframe 
-                src={`https://docs.google.com/gview?url=${encodeURIComponent(link)}&embedded=true`}
-                className="w-full h-[400px] border border-gray-300 rounded-lg" 
-                title="PDF Preview"
-                onError={(e) => {
-                  (e.target as HTMLIFrameElement).style.display = 'none'
-                }}
-              />
+            <div className="w-full space-y-3 mb-3">
+              {/* PDF Preview - Try direct embed first, Google Docs viewer as fallback */}
+              <div className="relative w-full h-[400px] border border-gray-300 rounded-lg overflow-hidden bg-gray-100">
+                <iframe 
+                  src={link}
+                  className="absolute inset-0 w-full h-full" 
+                  title="PDF Preview"
+                  onError={(e) => {
+                    // If direct PDF fails, try Google Docs viewer
+                    const iframe = e.target as HTMLIFrameElement
+                    if (!iframe.src.includes('docs.google.com')) {
+                      iframe.src = `https://docs.google.com/gview?url=${encodeURIComponent(link)}&embedded=true`
+                    }
+                  }}
+                />
+              </div>
             </div>
           )}
           {!link && <div className="text-gray-400">No file available</div>}
@@ -274,7 +286,7 @@ export default function Embed({ type, link, content }: EmbedProps) {
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
               </svg>
-              Open File
+              Open File in New Tab
             </a>
           )}
         </div>
