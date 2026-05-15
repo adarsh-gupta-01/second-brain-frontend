@@ -78,7 +78,7 @@ const Login = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen px-4 bg-gradient-to-br from-slate-50 via-blue-50 to-white">
+    <div className="flex items-center justify-center min-h-screen px-4 bg-linear-to-br from-slate-50 via-blue-50 to-white">
       <form
         onSubmit={handleLogin}
         className="w-full max-w-md bg-white/70 backdrop-blur-lg border border-white/40 rounded-3xl shadow-xl p-8 space-y-6"
@@ -147,7 +147,7 @@ const Login = () => {
             disabled={loading}
             variant="primary"
             type="submit"
-            className="w-1/2 bg-gradient-to-r from-blue-500 to-blue-600 hover:opacity-90"
+            className="w-1/2 bg-linear-to-r from-blue-500 to-blue-600 hover:opacity-90"
           />
         </div>
       </form>

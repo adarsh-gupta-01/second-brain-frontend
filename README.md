@@ -1,83 +1,95 @@
 # 🧠 Second Brain - Frontend
 
-A modern, feature-rich personal knowledge management and content curation platform. Organize, categorize, and share your digital brain across multiple content types with an intuitive, responsive interface.
+> A modern personal knowledge management and content curation platform built with cutting-edge React technologies.
 
-> **Built with:** React 19 • TypeScript • Vite • Tailwind CSS • React Router v7
+**Live Demo:** [View Application](https://thought-pool.vercel.app)
+
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![React](https://img.shields.io/badge/React-19.1.1-61dafb?logo=react)](https://react.dev)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178c6?logo=typescript)](https://www.typescriptlang.org)
+[![Vite](https://img.shields.io/badge/Vite-7.1.7-646cff?logo=vite)](https://vitejs.dev)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-4.1-06B6D4?logo=tailwindcss)](https://tailwindcss.com)
 
 ---
 
 ## 🎯 Overview
 
-**Second Brain** is a full-stack web application that lets users collect, organize, and share content from various sources including tweets, YouTube videos, articles, notes, images, and more. Think of it as your personal content hub where everything you find interesting is stored and easily accessible.
+**Second Brain** is a sophisticated content management system that transforms how users collect, organize, and share digital content. The application provides a unified platform to manage diverse content types—from social media posts to documents—with an intuitive, responsive interface designed for modern web standards.
 
-This repository contains the **frontend** built with modern React practices and cutting-edge tooling for optimal performance and developer experience.
+This repository contains the **frontend** implementation, built with React 19 and modern development practices, demonstrating professional software architecture and state management patterns.
 
 ---
 
 ## ✨ Key Features
 
-### 📋 Content Management
-- **Add Content** - Easily save links, notes, documents, images from multiple sources
-- **Edit & Delete** - Full CRUD operations on all your saved content
-- **Detailed View** - Expanded view for individual content items with preview capabilities
-- **Automatic Embeds** - Automatic embedding of tweets, YouTube videos, Instagram posts, and more
+### 📋 **Content Management**
+- **Multi-Format Support** - Seamlessly manage tweets, YouTube videos, Instagram posts, images, documents, and notes
+- **CRUD Operations** - Full Create, Read, Update, Delete functionality for all content types
+- **Smart Organization** - Automatic categorization with custom tagging system
+- **Rich Preview** - Embedded displays for social media content with automatic embed loading
 
-### 🏷️ Organization & Filtering
-- **Multi-Category Support** - Organize content by type:
-  - 🐦 Tweets & Twitter Links
-  - 🎬 YouTube Videos
-  - 📷 Instagram Posts & Images
-  - 📄 Documents & Articles
-  - 📝 Notes
-  - 🔗 Links
-- **Smart Filtering** - Quick sidebar navigation to filter content by category
-- **Content Statistics** - View count summaries for each category
+### 🏷️ **Organization & Navigation**
+- **Smart Filtering** - Category-based filtering via sidebar navigation
+- **Content Statistics** - Real-time count tracking for each content type
+- **Category Routes** - Dedicated routes for each content type (`/twitter`, `/youtube`, `/images`, etc.)
+- **Search & Browse** - Intuitive interface for discovering saved content
 
-### 👥 Social & Sharing
-- **Public Sharing** - Share your entire brain with unique shareable links
-- **Shared Brain Viewing** - View and explore other users' shared content collections
-- **User Profiles** - Personalized profiles with avatar and bio
+### 👥 **Social & Sharing**
+- **Public Sharing** - Generate and share unique shareable links to your entire content collection
+- **Shared Brain Viewing** - Explore other users' shared collections without authentication
+- **User Profiles** - Personalized profiles with customizable avatar and bio
 
-### 🎨 User Experience
-- **Dark Mode Toggle** - Seamless light/dark theme switching
-- **Responsive Design** - Fully mobile-responsive interface with responsive sidebar
-- **Real-time Notifications** - Toast notifications for user actions
-- **Smooth Animations** - Framer Motion powered transitions and interactions
-- **Loading States** - Professional loading indicators with spinners
+### 🎨 **User Experience**
+- **Dark Mode** - Seamless light/dark theme switching with persistent preferences
+- **Responsive Design** - Mobile-first approach with full responsiveness across devices
+- **Toast Notifications** - Real-time user feedback for all actions
+- **Loading States** - Professional loading indicators with animated spinners
+- **Smooth Animations** - Framer Motion powered transitions and micro-interactions
 
-### 🔐 Authentication
-- **Secure Sign In/Sign Up** - User registration and login system
-- **Protected Routes** - Secured endpoints for authenticated users only
-- **Session Management** - Persistent user sessions with automatic refresh
-- **Profile Management** - Update user information and preferences
+### 🔐 **Authentication & Security**
+- **Secure Auth** - User registration and login with session management
+- **Protected Routes** - Role-based access control for authenticated users
+- **Session Persistence** - Automatic session restoration with refresh token logic
+- **CORS Security** - Proper cross-origin resource sharing configuration
 
 ---
 
 ## 🛠️ Tech Stack
 
 ### Frontend Framework
-- **React 19.1.1** - Latest React with concurrent features
-- **TypeScript 5.9** - Type-safe development with strict checking
-- **Vite 7.1.7** - Lightning-fast build tool with HMR
+| Technology | Version | Purpose |
+|------------|---------|---------|
+| **React** | 19.1.1 | UI framework with concurrent rendering features |
+| **TypeScript** | 5.9 | Type-safe development with strict checking |
+| **Vite** | 7.1.7 | Lightning-fast build tool with HMR |
 
-### Styling & UI
-- **Tailwind CSS 4.1.14** - Utility-first CSS framework
-- **Tailwind CSS Vite Plugin** - Optimized integration with Vite
-- **Framer Motion 12.23.24** - Professional animations and transitions
-- **Lucide React 0.545** - Beautiful, consistent icon library
+### State Management & Routing
+| Technology | Version | Purpose |
+|------------|---------|---------|
+| **React Router DOM** | 7.9.4 | Client-side routing with modern API |
+| **React Context API** | Built-in | Global state (Auth, Modals, Theme) |
+| **TanStack React Query** | 5.90.2 | Server state management and caching |
 
-### State Management & Data
-- **React Router DOM 7.9.4** - Client-side routing with modern API
-- **React Context API** - Lightweight state management (Auth, Modal, Theme)
-- **TanStack React Query 5.90.2** - Server state management and caching
-- **Axios 1.12.2** - Promise-based HTTP client for API calls
+### Styling & UI Components
+| Technology | Version | Purpose |
+|------------|---------|---------|
+| **Tailwind CSS** | 4.1.14 | Utility-first CSS framework |
+| **Lucide React** | 0.545 | Modern, consistent icon library |
+| **Framer Motion** | 12.23.24 | Professional animations and transitions |
+
+### API & Network
+| Technology | Version | Purpose |
+|------------|---------|---------|
+| **Axios** | 1.12.2 | Promise-based HTTP client with interceptors |
+| **React Hot Toast** | 2.6.0 | Non-blocking toast notifications |
+| **React Spinners** | 0.17.0 | Loading animations |
 
 ### Developer Experience
-- **ESLint 9.36.0** - Code quality and best practices enforcement
-- **TypeScript ESLint** - Type-aware linting rules
-- **ESLint React Hooks Plugin** - Hooks rules validation
-- **React Hot Toast 2.6.0** - Beautiful toast notifications
-- **React Spinners 0.17.0** - Loading spinner animations
+| Technology | Version | Purpose |
+|------------|---------|---------|
+| **ESLint** | 9.36.0 | Code quality and best practices |
+| **TypeScript ESLint** | 8.45.0 | Type-aware linting |
+| **React Hooks Plugin** | 5.2.0 | Hooks best practices validation |
 
 ---
 
@@ -85,54 +97,54 @@ This repository contains the **frontend** built with modern React practices and 
 
 ```
 src/
-├── pages/                      # Page components
-│   ├── Home.tsx               # Main dashboard with filtered content
-│   ├── DetailedCardView.tsx   # Individual content detail view
-│   ├── SharedBrain.tsx        # Public shared content view
-│   ├── ProfilePage.tsx        # User profile management
-│   ├── SignIn.tsx             # Login page
-│   ├── SignUp.tsx             # Registration page
-│   └── Logout.tsx             # Logout handler
+├── pages/                          # Page components & routes
+│   ├── Home.tsx                   # Main dashboard with content grid
+│   ├── DetailedCardView.tsx       # Individual content detail page
+│   ├── SharedBrain.tsx            # Public shared content view
+│   ├── ProfilePage.tsx            # User profile management
+│   ├── SignIn.tsx                 # Login page
+│   ├── SignUp.tsx                 # Registration page
+│   └── Logout.tsx                 # Logout handler
 │
-├── components/                # Reusable UI components
-│   ├── Card.tsx               # Content card component
-│   ├── Button.tsx             # Custom button component
-│   ├── Input.tsx              # Form input component
-│   ├── AddContentModal.tsx    # Modal for adding new content
-│   ├── EditContentModal.tsx   # Modal for editing content
-│   ├── DeleteConfirmationModal.tsx
-│   ├── ShareModal.tsx         # Share brain functionality
-│   ├── ProfileModal.tsx       # User profile modal
-│   ├── LogoutModal.tsx        # Logout confirmation
-│   ├── ProtectedRoute.tsx     # Auth-protected route wrapper
-│   ├── Embed.tsx              # Content embedding handler
-│   ├── DarkModeToggle.tsx     # Theme switcher
-│   └── SidebarItem.tsx        # Sidebar navigation item
+├── components/                     # Reusable UI components
+│   ├── Card.tsx                   # Content card with actions
+│   ├── Button.tsx                 # Custom button component
+│   ├── Input.tsx                  # Form input component
+│   ├── AddContentModal.tsx        # Modal for content creation
+│   ├── EditContentModal.tsx       # Modal for content editing
+│   ├── DeleteConfirmationModal.tsx# Delete confirmation UI
+│   ├── ShareModal.tsx             # Shareable link generator
+│   ├── ProfileModal.tsx           # User profile management
+│   ├── LogoutModal.tsx            # Logout confirmation
+│   ├── ProtectedRoute.tsx         # Authentication wrapper
+│   ├── Embed.tsx                  # Content embedding handler
+│   ├── DarkModeToggle.tsx         # Theme switcher
+│   └── SidebarItem.tsx            # Navigation sidebar item
 │
-├── context/                   # React Context API providers
-│   ├── AuthContext.tsx        # Authentication state & logic
-│   ├── ModalContext.tsx       # Modal visibility state
-│   ├── ThemeContext.tsx       # Dark mode state
-│   ├── useModal.ts            # Custom hook for modal management
-│   └── useTheme.ts            # Custom hook for theme management
+├── context/                        # React Context providers
+│   ├── AuthContext.tsx            # Auth state & user data
+│   ├── ModalContext.tsx           # Modal visibility management
+│   ├── ThemeContext.tsx           # Dark mode state
+│   ├── useModal.ts                # Custom hook for modals
+│   └── useTheme.ts                # Custom hook for theme
 │
-├── icons/                     # SVG icon components
+├── icons/                          # SVG icon components
 │   ├── TwitterIcon.tsx, YouTubeIcon.tsx, InstagramIcon.tsx
-│   ├── DocumentsIcon.tsx, NotesIcon.tsx, ImagesIcon.tsx
-│   └── ... (20+ custom SVG icons)
+│   ├── DocumentsIcon.tsx, NotesIcon.tsx, ImageIcon.tsx
+│   └── [20+ custom SVG icons]
 │
 ├── api/
-│   └── client.ts              # Axios HTTP client configuration
+│   └── client.ts                  # Axios configuration & API endpoints
 │
 ├── theme/
-│   ├── index.ts               # Theme configuration
-│   └── utils.ts               # Theme utility functions
+│   ├── index.ts                   # Theme configuration
+│   └── utils.ts                   # Theme utilities
 │
-├── App.tsx                    # Root application component
-├── Routes.tsx                 # Route configuration
-├── main.tsx                   # Application entry point
-├── App.css                    # Global styles
-└── index.css                  # Base styles
+├── App.tsx                         # Root application component
+├── Routes.tsx                      # Route configuration
+├── main.tsx                        # Application entry point
+├── App.css                         # Global styles
+└── index.css                       # Base CSS
 ```
 
 ---
@@ -142,13 +154,13 @@ src/
 ### Prerequisites
 - **Node.js** 18.0 or higher
 - **npm** or **yarn** package manager
-- Backend API running (see backend repository)
+- **Backend API** running (configure via `.env.local`)
 
-### Installation
+### Installation & Setup
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/second-brain-frontend.git
+   git clone https://github.com/adarsh-gupta-01/second-brain-frontend.git
    cd second-brain-frontend
    ```
 
@@ -157,14 +169,15 @@ src/
    npm install
    ```
 
-3. **Create environment variables**
+3. **Configure environment variables**
    ```bash
    cp .env.example .env.local
    ```
    
-   Configure your `.env.local`:
+   Update `.env.local` with your API configuration:
    ```env
    VITE_API_KEY=http://localhost:3000/api
+   VITE_PRODUCTION_URL=https://your-domain.com
    ```
 
 4. **Start development server**
@@ -177,70 +190,96 @@ src/
 ### Available Scripts
 
 ```bash
-npm run dev          # Start development server with HMR
-npm run build        # Build for production (TypeScript + Vite)
-npm run preview      # Preview production build locally
-npm run lint         # Run ESLint to check code quality
+# Start development server with hot reload
+npm run dev
+
+# Build optimized production bundle
+npm run build
+
+# Preview production build locally
+npm run preview
+
+# Run ESLint code quality checks
+npm run lint
 ```
 
 ---
 
-## 💡 Usage
+## 💡 Usage & Features
 
 ### Adding Content
-1. Click the **"+" button** or press the "Add Content" button
-2. Fill in the content details (title, link, category, tags)
-3. Select content type (tweet, video, image, note, etc.)
-4. Click **Save** - content automatically embeds if applicable
+1. Click the **"+" button** in the header
+2. Select content type (Tweet, YouTube, Image, etc.)
+3. Fill in details: title, link, tags, and optional notes
+4. Upload file if applicable
+5. Click **Save** - embedded content automatically loads
 
-### Organizing Your Brain
-- Use the **left sidebar** to filter content by category
-- View **content statistics** for each category
-- Search and browse through your organized collection
+### Organizing Content
+- Use **sidebar categories** to filter by type
+- View **count statistics** for each category
+- Access **dedicated routes** for each content type
+- **Search and browse** through your collection
 
 ### Sharing Your Brain
 1. Click the **Share button** in the header
-2. Copy the generated shareable link
-3. Share with others - they can view your content without login
+2. Toggle sharing status and copy the link
+3. Share the unique URL with others
+4. Viewers can explore your content without login
 
 ### Profile Management
-- Click your **profile icon** in the header
-- Update avatar, bio, username
-- Manage account settings
+- Click **profile icon** in header
+- Update **avatar, bio, and username**
+- Manage **account settings**
 
 ### Theme Customization
-- Click the **theme toggle** icon to switch between light/dark modes
-- Theme preference is automatically saved
+- Click **theme toggle** icon
+- Switch between **light and dark modes**
+- Preference automatically saved to browser
 
 ---
 
 ## 🏗️ Architecture & Design Patterns
 
 ### Component Architecture
-- **Container/Presentational Pattern** - Smart components manage logic, dumb components handle UI
-- **Custom Hooks** - `useModal()`, `useTheme()` for state encapsulation
-- **Context API** - Global state management for Auth, Modal, and Theme
-- **Compound Components** - Modal and form components work together seamlessly
+- **Container/Presentational Pattern** - Smart components handle logic, presentational components handle UI
+- **Custom Hooks** - `useModal()`, `useTheme()` for state encapsulation and reusability
+- **Compound Components** - Modal and form components designed to work together
+- **Prop Composition** - Clean prop interfaces with TypeScript validation
 
 ### State Management Strategy
-- **Context API** - Light state (Auth, UI modals, theme)
-- **React Query** - Server state (content data, pagination)
-- **Local State** - Component-level state for forms and UI toggles
+```
+┌─────────────────────────────────────────┐
+│      React Application State            │
+├─────────────────────────────────────────┤
+│ Context API         React Query         │
+│ ├─ Auth Context    ├─ Content queries  │
+│ ├─ Modal Context   ├─ User queries     │
+│ └─ Theme Context   └─ Caching          │
+└─────────────────────────────────────────┘
+```
 
-### Styling Approach
-- **Tailwind CSS** - Utility-first for consistent, maintainable styling
-- **Responsive Design** - Mobile-first approach with Tailwind breakpoints
-- **Dark Mode** - CSS variables and theme context switching
+### HTTP Client Pattern
+- **Centralized Axios Instance** - Single configuration point for all requests
+- **Request Interceptors** - Automatic auth token injection
+- **Response Interceptors** - Error handling and user feedback
+- **API Endpoints** - Organized method exports for type safety
+
+### Error Handling
+- **Client-side Validation** - Form validation before submission
+- **Server Error Handling** - Graceful error recovery
+- **User Feedback** - Toast notifications for all operations
+- **Session Management** - Automatic logout on auth failures
 
 ---
 
 ## 🔒 Security Features
 
-- **Protected Routes** - Authentication required for sensitive pages
-- **Secure API Calls** - Credentials included in all requests
-- **CORS Handling** - Proper cross-origin configuration
-- **Input Validation** - Client-side validation before submission
-- **XSS Prevention** - React's built-in XSS protection
+✅ **Protected Routes** - Authentication required for sensitive pages  
+✅ **CORS Configuration** - Proper cross-origin resource sharing  
+✅ **Session Management** - Secure cookie-based sessions  
+✅ **Input Validation** - Client-side validation before submission  
+✅ **XSS Prevention** - React's built-in XSS protection  
+✅ **Credential Handling** - Secure credential transmission with `withCredentials`  
 
 ---
 
@@ -251,75 +290,116 @@ npm run lint         # Run ESLint to check code quality
 npm run build
 ```
 
-Creates optimized build in `dist/` folder.
+Creates an optimized build in the `dist/` folder.
 
-### Deployment Options
-- **Vercel** - Optimized for Vite/React projects
-- **Netlify** - CI/CD integration with git
-- **Docker** - Containerized deployment
-- **AWS S3 + CloudFront** - Static hosting
+### Deployment Platforms
 
-The project includes configuration for:
-- `vercel.json` - Vercel deployment configuration
-- `netlify.toml` - Netlify deployment configuration
+**Vercel** (Recommended)
+- Optimized for Vite/React projects
+- Zero-config deployment
+- See `vercel.json` for configuration
+
+**Netlify**
+- CI/CD integration with git
+- See `netlify.toml` for configuration
+
+**Docker**
+```dockerfile
+FROM node:18-alpine
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci
+COPY . .
+RUN npm run build
+EXPOSE 3000
+CMD ["npm", "run", "preview"]
+```
+
+**Cloud Hosting** - AWS S3 + CloudFront, Google Cloud Storage, Azure Static Web Apps
 
 ---
 
-## 🔄 Git Workflow
+## 🔄 API Integration
 
+### Base Configuration
+- **Base URL** - Configurable via `VITE_API_KEY` environment variable
+- **Timeout** - 10 seconds default
+- **Credentials** - Included in all requests for session management
+- **Headers** - Automatic Content-Type and Authorization headers
+
+### Key API Endpoints
+
+| Method | Endpoint | Purpose |
+|--------|----------|---------|
+| POST | `/login` | User login |
+| POST | `/signup` | User registration |
+| POST | `/logout` | User logout |
+| GET | `/me` | Get current user info |
+| PUT | `/me` | Update user profile |
+| POST | `/content` | Create content |
+| GET | `/content` | Fetch all/filtered content |
+| GET | `/content/stats` | Get category counts |
+| PUT | `/content` | Update content |
+| DELETE | `/content` | Delete content |
+| POST | `/brain/share` | Toggle brain sharing |
+| GET | `/brain/:shareId` | View shared brain |
+
+---
+
+## 🎓 Learning Resources
+
+This project demonstrates proficiency in:
+
+- **Modern React** - Hooks, Context API, functional components
+- **TypeScript** - Strong typing, interfaces, type inference
+- **State Management** - Multi-layer state with Context + React Query
+- **API Integration** - Axios interceptors, error handling
+- **Responsive Design** - Mobile-first Tailwind CSS
+- **Component Architecture** - Reusable, maintainable components
+- **Form Handling** - Validation, error states, loading states
+- **Authentication** - Session management, protected routes
+- **Performance** - Code splitting, lazy loading, memoization
+- **Developer Experience** - ESLint, TypeScript, Hot Module Replacement
+
+---
+
+## 📊 Performance Optimizations
+
+- **Code Splitting** - Lazy-loaded route components
+- **Tree Shaking** - Unused code eliminated in production
+- **CSS Purging** - Only included used Tailwind classes
+- **Image Optimization** - Responsive images with proper sizing
+- **Memoization** - React.memo and useCallback for prevention of unnecessary renders
+- **Bundle Analysis** - Optimized chunk sizes
+
+---
+
+## 🐛 Troubleshooting
+
+### API Connection Issues
+- Verify `VITE_API_KEY` environment variable is set correctly
+- Ensure backend server is running on configured port
+- Check CORS configuration in backend
+
+### Build Errors
 ```bash
-# Feature development
-git checkout -b feature/your-feature-name
+# Clear node_modules and reinstall
+rm -rf node_modules package-lock.json
+npm install
+npm run build
+```
 
-# Commit with conventional commits
-git commit -m "feat: add new feature"
-git commit -m "fix: resolve bug"
-git commit -m "refactor: improve code"
-
-# Push and create Pull Request
-git push origin feature/your-feature-name
+### TypeScript Errors
+```bash
+# Rebuild TypeScript
+npm run build -- --force
 ```
 
 ---
 
-## 🤝 Contributing
+## 📝 Contributing
 
-Contributions are welcome! Please follow these steps:
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-### Development Guidelines
-- Follow existing code style and patterns
-- Ensure all tests pass before submitting PR
-- Update README if adding new features
-- Keep components small and focused
-
----
-
-## 📚 Related Repositories
-
-- **[Second Brain Backend](https://github.com/yourusername/second-brain-backend)** - Node.js/Express backend API
-- **[Second Brain Mobile](https://github.com/yourusername/second-brain-mobile)** - React Native mobile app
-
----
-
-## 🐛 Known Issues & Future Enhancements
-
-### Planned Features
-- [ ] Advanced search with full-text search
-- [ ] Tag management and tag-based filtering
-- [ ] Content export (PDF, JSON)
-- [ ] Collaborative sharing with permissions
-- [ ] Browser extension for quick content capture
-- [ ] PWA support for offline access
-- [ ] AI-powered content recommendations
-
-### Known Issues
-- None currently reported
+This project is maintained as a portfolio demonstration. For collaboration opportunities or questions, please reach out.
 
 ---
 
@@ -329,30 +409,29 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-## 👤 Author
+## 👨‍💻 Author
 
-**Adarsh**
-- GitHub: [@yourusername](https://github.com/yourusername)
-- Email: your.email@example.com
-- Portfolio: [your-portfolio.com](https://your-portfolio.com)
+**Adarsh**  
+- GitHub: [@adarsh-gupta-01](https://github.com/adarsh-gupta-01)
 
-Built with ❤️ and lots of ☕
+Built with modern web technologies and attention to detail.
 
 ---
 
-## 📞 Support
+## 🙏 Acknowledgments
 
-For support, email support@secondbrain.com or open an issue on GitHub.
-
----
-
-## 🙌 Acknowledgments
-
-- React community for amazing libraries and tools
-- Tailwind CSS for utility-first styling
-- Vite team for incredible build tool
-- All contributors and users
+- [React](https://react.dev) - The UI library foundation
+- [Tailwind CSS](https://tailwindcss.com) - Utility-first styling
+- [Vite](https://vitejs.dev) - Next-generation build tool
+- [TypeScript](https://www.typescriptlang.org) - Type safety
+- Open source community for excellent tools and libraries
 
 ---
 
-**⭐ If you find this project useful, please consider giving it a star!**
+<div align="center">
+
+**[⬆ Back to Top](#-second-brain---frontend)**
+
+Made with ❤️ | [View Backend Repository](https://github.com/adarsh-gupta-01/second-brain-backend)
+
+</div>
