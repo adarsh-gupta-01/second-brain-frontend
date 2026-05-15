@@ -346,23 +346,6 @@ CMD ["npm", "run", "preview"]
 
 ---
 
-## 🎓 Learning Resources
-
-This project demonstrates proficiency in:
-
-- **Modern React** - Hooks, Context API, functional components
-- **TypeScript** - Strong typing, interfaces, type inference
-- **State Management** - Multi-layer state with Context + React Query
-- **API Integration** - Axios interceptors, error handling
-- **Responsive Design** - Mobile-first Tailwind CSS
-- **Component Architecture** - Reusable, maintainable components
-- **Form Handling** - Validation, error states, loading states
-- **Authentication** - Session management, protected routes
-- **Performance** - Code splitting, lazy loading, memoization
-- **Developer Experience** - ESLint, TypeScript, Hot Module Replacement
-
----
-
 ## 📊 Performance Optimizations
 
 - **Code Splitting** - Lazy-loaded route components
@@ -397,34 +380,12 @@ npm run build -- --force
 
 ---
 
-## 📝 Contributing
-
-This project is maintained as a portfolio demonstration. For collaboration opportunities or questions, please reach out.
-
----
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
-## 👨‍💻 Author
+## �‍💻 Author
 
 **Adarsh**  
 - GitHub: [@adarsh-gupta-01](https://github.com/adarsh-gupta-01)
 
 Built with modern web technologies and attention to detail.
-
----
-
-## 🙏 Acknowledgments
-
-- [React](https://react.dev) - The UI library foundation
-- [Tailwind CSS](https://tailwindcss.com) - Utility-first styling
-- [Vite](https://vitejs.dev) - Next-generation build tool
-- [TypeScript](https://www.typescriptlang.org) - Type safety
-- Open source community for excellent tools and libraries
 
 ---
 
